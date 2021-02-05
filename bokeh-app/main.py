@@ -25,7 +25,7 @@ info_box_runaway = Label(x=15, y=750, x_units='screen', y_units='screen',
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
                  text_font_size='20px',
-                 text_color='white',
+                 text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
                  
 info_box_k_sw = Label(x=15, y=700, x_units='screen', y_units='screen',
@@ -33,7 +33,7 @@ info_box_k_sw = Label(x=15, y=700, x_units='screen', y_units='screen',
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
                  text_font_size='20px',
-                 text_color='white',
+                 text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
 info_box_k_bub = Label(x=15, y=650, x_units='screen', y_units='screen',
@@ -41,7 +41,7 @@ info_box_k_bub = Label(x=15, y=650, x_units='screen', y_units='screen',
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
                  text_font_size='20px',
-                 text_color='white',
+                 text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
 info_box_v = Label(x=15, y=600, x_units='screen', y_units='screen',
@@ -49,7 +49,7 @@ info_box_v = Label(x=15, y=600, x_units='screen', y_units='screen',
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
                  text_font_size='20px',
-                 text_color='white',
+                 text_color='snow',
                  background_fill_color='white', background_fill_alpha=0.0)
 
 # Set up plot
@@ -71,11 +71,10 @@ plot.ygrid.visible = True
 
 
 
-plot.line('x', 'y', source=source_bub, line_width=5, line_alpha=0.9, legend_label='Bubble', line_color="orange")
-plot.line('x', 'y', source=source_sw, line_width=5, line_alpha=0.9, legend_label='Sw', line_color="green")
-plot.line('x', 'y', source=source_turb, line_width=5, line_alpha=0.9, legend_label='Turb', line_color="navy")
-plot.line('x', 'y', source=source_tot, line_width=5, line_alpha=0.9, legend_label='Sum', line_color="white", line_dash='dashed')
-plot.circle(freq_bins[:5], h2omega_median[:5], color='red', size=5, line_alpha=0)
+plot.line('x', 'y', source=source_bub, line_width=5, line_alpha=0.9, legend_label='Bubble', line_color="crimson")
+plot.line('x', 'y', source=source_sw, line_width=5, line_alpha=0.9, legend_label='Sw', line_color="mediumseagreen")
+plot.line('x', 'y', source=source_turb, line_width=5, line_alpha=0.9, legend_label='Turb', line_color="dodgerblue")
+plot.line('x', 'y', source=source_tot, line_width=5, line_alpha=0.9, legend_label='Sum', line_color="snow", line_dash='dashed')
 plot.xaxis.axis_label_text_font_size = '17pt'
 plot.yaxis.axis_label_text_font_size = '17pt'
 plot.xaxis.major_label_text_font_size = "17pt"
@@ -103,6 +102,8 @@ return 10 + (Math.log10(tick).toString()
              .join(''));
 """)
 
+plot.circle(freq_bins[:5], h2omega_median[:5], color='snow', size=8, line_alpha=0)
+
 err_xs = []
 err_ys = []
 
@@ -111,7 +112,7 @@ for x, y, yerr_low, yerr_hig in zip(freq_bins[:5], h2omega_median[:5], yerr[0], 
     err_ys.append((y - yerr_low, y + yerr_hig))
 
 # plot them
-plot.multi_line(err_xs, err_ys, color='red', line_width=3, line_alpha=0.7)
+plot.multi_line(err_xs, err_ys, color='snow', line_width=4, line_alpha=0.8)
 
 # Set up widgets
 
