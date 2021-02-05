@@ -309,7 +309,7 @@ f = np.logspace(-11., np.log10(3e-8))
 T_span = 12.5*scon.year # s
 
 # first 5 frequency bins
-freq_bins = np.loadtxt('./data/nano12_freq.txt')
+freq_bins = np.loadtxt('data/nano12_freq.txt')
 
 # median of log10(residuals (s))
 log10_res_median = np.loadtxt('./data/nano12_median.txt')
