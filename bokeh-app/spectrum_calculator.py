@@ -9,11 +9,11 @@ from scipy import interpolate
 
 # get deflagration velocity
 #@function
-def get_def_xi(eta, alpha, def_eta_tab='./data/def_eta_tab.csv', def_alpha_tab='./data/def_alpha_tab.csv', def_xi_tab='./data/def_xi_tab.csv'):
+def get_def_xi(eta, alpha):
     
-    eta_tab = genfromtxt(def_eta_tab, delimiter=',')
-    alpha_tab = genfromtxt(def_alpha_tab, delimiter=',')
-    xi_tab = genfromtxt(def_xi_tab, delimiter=',')
+    eta_tab = genfromtxt(join(dirname(__file__),'./data/def_eta_tab.csv'), delimiter=',')
+    alpha_tab = genfromtxt(join(dirname(__file__),'./data/def_alpha_tab.csv'), delimiter=',')
+    xi_tab = genfromtxt(join(dirname(__file__),'./data/def_xi_tab.csv'), delimiter=',')
 
     xi_interp = interpolate.interp2d(eta_tab, alpha_tab, xi_tab, kind='cubic')
 
@@ -21,11 +21,11 @@ def get_def_xi(eta, alpha, def_eta_tab='./data/def_eta_tab.csv', def_alpha_tab='
 
 # get detonation velocity
 #@function
-def get_det_xi(eta, alpha, det_eta_tab='./data/det_eta_tab.csv', det_alpha_tab='./data/det_alpha_tab.csv', det_xi_tab='./data/det_xi_tab.csv'):
+def get_det_xi(eta, alpha):
     
-    eta_tab = genfromtxt(det_eta_tab, delimiter=',')
-    alpha_tab = genfromtxt(det_alpha_tab, delimiter=',')
-    xi_tab = genfromtxt(det_xi_tab, delimiter=',')
+    eta_tab = genfromtxt(join(dirname(__file__),'./data//det_eta_tab.csv'), delimiter=',')
+    alpha_tab = genfromtxt(join(dirname(__file__),'./data//det_alpha_tab.csv'), delimiter=',')
+    xi_tab = genfromtxt(join(dirname(__file__),'./data/det_xi_tab.csv'), delimiter=',')
 
     xi_interp = interpolate.interp2d(eta_tab, alpha_tab, xi_tab, kind='cubic')
 
@@ -35,13 +35,13 @@ def get_det_xi(eta, alpha, det_eta_tab='./data/det_eta_tab.csv', det_alpha_tab='
 # detonation if get_boundary(eta) < alpha < alpha_inf
 # runaway if alpha > alpha_inf
 #@function 
-def get_boundary(eta, table='./data/det2def_trans.csv'):
+def get_boundary(eta):
     
     # deflagration if alpha < get_boundary(eta)
     # detonation if get_boundary(eta) < alpha < alpha_inf
     # runaway if alpha > alpha_inf
     
-    det2def_tab = genfromtxt(table, delimiter=',')
+    det2def_tab = genfromtxt(join(dirname(__file__),'./data/det2def_trans.csv'), delimiter=',')
     
     det2def_interp = interpolate.interp1d(det2def_tab[::,0], det2def_tab[::,1], kind='cubic')
     
