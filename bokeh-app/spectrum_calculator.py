@@ -1,3 +1,4 @@
+from os.path import join, dirname
 import numpy as np
 from scipy import constants as scon
 from numpy import genfromtxt
@@ -115,7 +116,7 @@ def pt_type(eta, alpha):
     
     # main function to get the PSD of phase transition      
 #@function
-def pt_h2_omega(f, log10_T_star=None, log10_H_star_on_beta=None, log10_alpha_star=None, log10_eta=None, g_star_path='./data/g_star.txt', h=0.674, zp=6.9, gamma=4/3, epsilon_turb=0.1, components=2):
+def pt_h2_omega(f, log10_T_star=None, log10_H_star_on_beta=None, log10_alpha_star=None, log10_eta=None, g_star_path=join(dirname(__file__), 'data/g_star.txt'), h=0.674, zp=6.9, gamma=4/3, epsilon_turb=0.1, components=2):
     
     # PSD of gravitational wave background from runaway and nonrunaway phase transition
     # the signal shapes come from Weir (2018)
@@ -309,16 +310,17 @@ f = np.logspace(-11., np.log10(3e-8))
 T_span = 12.5*scon.year # s
 
 # first 5 frequency bins
-freq_bins = np.loadtxt('data/nano12_freq.txt')
+
+freq_bins = np.loadtxt(join(dirname(__file__), 'data/nano12_freq.txt'))
 
 # median of log10(residuals (s))
-log10_res_median = np.loadtxt('./data/nano12_median.txt')
+log10_res_median = np.loadtxt(join(dirname(__file__), 'data/nano12_median.txt'))
 
 # upper limit of log10(residuals (s))
-log10_res_up = np.loadtxt('./data/nano12_up.txt')
+log10_res_up = np.loadtxt(join(dirname(__file__), 'data/nano12_up.txt'))
 
 # lower limit of log10(resuduals (s))
-log10_res_down = np.loadtxt('./data/nano12_down.txt')
+log10_res_down = np.loadtxt(join(dirname(__file__), 'data/nano12_down.txt'))
 
 # NanoGrav
 h0 = 2.27E-18 # Hz
