@@ -5,9 +5,10 @@ from bokeh.plotting import figure
 from bokeh.models.formatters import FuncTickFormatter
 from bokeh.themes import built_in_themes
 
-from new_spectrum_calculator import *
+from spectrum_calculator import *
 from data_points import *
 
+import numpy as np
 
 ###############
 # Set up data #
@@ -22,9 +23,9 @@ mod = 'Semi-analytic'
 
 f = np.logspace(-11., np.log10(3e-8))
 
-Om_phi = h2_omega_phi(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, mod=mod)
-Om_sw = h2_omega_sw(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta)
-Om_turb = h2_omega_turb(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta)
+Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble', mod=mod)
+Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='sound')
+Om_turb = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='turb')
 Om_sum = Om_phi + Om_sw + Om_turb
 
 source_tot = ColumnDataSource(data=dict(x=f, y=Om_sum))
@@ -70,7 +71,7 @@ info_box_v = Label(x=15, y=600, x_units='screen', y_units='screen',
 ###############
 # Set up plot #
 ###############
-plot = figure(plot_height=900, plot_width=1300,
+plot = figure(plot_height=675, plot_width=975,
               tools="crosshair,pan,reset,save,wheel_zoom",
               x_range=[f[0], f[-1]], y_range=[10**-14, 10**-6],
               x_axis_type="log", y_axis_type="log",
@@ -153,9 +154,9 @@ def update_data(attrname, old, new):
     mod = mode.value
 
     # Generate the new curve
-    Om_phi = h2_omega_phi(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, mod=mod)
-    Om_sw = h2_omega_sw(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta)
-    Om_turb = h2_omega_turb(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta)
+    Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble', mod=mod)
+    Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='sound')
+    Om_turb = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='turb')
     Om_sum = Om_phi + Om_sw + Om_turb
 
     source_tot.data = dict(x=f, y=Om_sum)
