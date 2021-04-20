@@ -176,6 +176,6 @@ for w in [T, H_on_beta, alpha, eta, mode]:
 # Set up layouts and add to document
 inputs = column(T, H_on_beta, alpha, eta, mode)
 
-curdoc().add_root(row(inputs, plot, width=800))
+curdoc().add_root(row(inputs, plot, width=1000))
 curdoc().info_box = "Spectrum"
 curdoc().theme = 'dark_minimal'
