@@ -36,7 +36,7 @@ source_turb = ColumnDataSource(data=dict(x=f, y=Om_turb))
 ##############
 # Info boxes #
 ##############
-info_box_runaway = Label(x=15, y=750, x_units='screen', y_units='screen',
+info_box_runaway = Label(x=15, y=600, x_units='screen', y_units='screen',
                  text="runaway = " + str(runaway_Q(log10_alpha, log10_eta)),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
@@ -44,7 +44,7 @@ info_box_runaway = Label(x=15, y=750, x_units='screen', y_units='screen',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
                  
-info_box_k_sw = Label(x=15, y=700, x_units='screen', y_units='screen',
+info_box_k_sw = Label(x=15, y=550, x_units='screen', y_units='screen',
                  text='sound wave eff. factor = ' + "%.3f" % round(k_sw(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
@@ -52,7 +52,7 @@ info_box_k_sw = Label(x=15, y=700, x_units='screen', y_units='screen',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
-info_box_k_bub = Label(x=15, y=650, x_units='screen', y_units='screen',
+info_box_k_bub = Label(x=15, y=500, x_units='screen', y_units='screen',
                  text='bubble eff. factor = ' + "%.3f" % round(k_phi(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
@@ -60,7 +60,7 @@ info_box_k_bub = Label(x=15, y=650, x_units='screen', y_units='screen',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
-info_box_v = Label(x=15, y=600, x_units='screen', y_units='screen',
+info_box_v = Label(x=15, y=450, x_units='screen', y_units='screen',
                  text='bubble wall speed = ' + "%.3f" % round(v_w(10**log10_eta, 10**log10_alpha), 2), 
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
@@ -71,7 +71,7 @@ info_box_v = Label(x=15, y=600, x_units='screen', y_units='screen',
 ###############
 # Set up plot #
 ###############
-plot = figure(plot_height=675, plot_width=975,
+plot = figure(plot_height=755, plot_width=975,
               tools="crosshair,pan,reset,save,wheel_zoom",
               x_range=[f[0], f[-1]], y_range=[10**-14, 10**-6],
               x_axis_type="log", y_axis_type="log",
