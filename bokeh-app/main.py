@@ -40,7 +40,7 @@ info_box_runaway = Label(x=15, y=600, x_units='screen', y_units='screen',
                  text="runaway = " + str(runaway_Q(log10_alpha, log10_eta)),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='20px',
+                 text_font_size='19px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
                  
@@ -48,7 +48,7 @@ info_box_k_sw = Label(x=15, y=550, x_units='screen', y_units='screen',
                  text='sound wave eff. factor = ' + "%.3f" % round(k_sw(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='20px',
+                 text_font_size='19px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
@@ -56,7 +56,7 @@ info_box_k_bub = Label(x=15, y=500, x_units='screen', y_units='screen',
                  text='bubble eff. factor = ' + "%.3f" % round(k_phi(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='20px',
+                 text_font_size='19px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
@@ -64,14 +64,14 @@ info_box_v = Label(x=15, y=450, x_units='screen', y_units='screen',
                  text='bubble wall speed = ' + "%.3f" % round(v_w(10**log10_eta, 10**log10_alpha), 2), 
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='20px',
+                 text_font_size='19px',
                  text_color='snow',
                  background_fill_color='white', background_fill_alpha=0.0)
 
 ###############
 # Set up plot #
 ###############
-plot = figure(plot_height=755, plot_width=975,
+plot = figure(plot_height=679, plot_width=877,
               tools="crosshair,pan,reset,save,wheel_zoom",
               x_range=[f[0], f[-1]], y_range=[10**-14, 10**-6],
               x_axis_type="log", y_axis_type="log",
@@ -85,10 +85,10 @@ plot.line('x', 'y', source=source_tot, line_width=5, line_alpha=0.9, legend_labe
 
 
 # layout 
-plot.xaxis.axis_label_text_font_size = '17pt'
-plot.yaxis.axis_label_text_font_size = '17pt'
-plot.xaxis.major_label_text_font_size = "17pt"
-plot.yaxis.major_label_text_font_size = "17pt"
+plot.xaxis.axis_label_text_font_size = '16pt'
+plot.yaxis.axis_label_text_font_size = '16pt'
+plot.xaxis.major_label_text_font_size = "16pt"
+plot.yaxis.major_label_text_font_size = "16pt"
 plot.legend.label_text_font_size = '16pt'
 plot.legend.background_fill_color = "white"
 plot.legend.background_fill_alpha = 0.2
@@ -96,7 +96,7 @@ plot.legend.background_fill_alpha = 0.2
 plot.title.text = "Interactive GW Spectrum"
 plot.title.align = "right"
 plot.title.text_color = "white"
-plot.title.text_font_size = "25px"
+plot.title.text_font_size = "23px"
 plot.xgrid.visible = True
 plot.ygrid.visible = True
 plot.outline_line_width = 3
@@ -176,6 +176,6 @@ for w in [T, H_on_beta, alpha, eta, mode]:
 # Set up layouts and add to document
 inputs = column(T, H_on_beta, alpha, eta, mode)
 
-curdoc().add_root(row(inputs, plot, width=1000))
+curdoc().add_root(row(inputs, plot, width=1400))
 curdoc().info_box = "Spectrum"
 curdoc().theme = 'dark_minimal'
