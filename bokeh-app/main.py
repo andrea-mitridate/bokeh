@@ -36,35 +36,35 @@ source_turb = ColumnDataSource(data=dict(x=f, y=Om_turb))
 ##############
 # Info boxes #
 ##############
-info_box_runaway = Label(x=15, y=600, x_units='screen', y_units='screen',
+info_box_runaway = Label(x=15, y=525, x_units='screen', y_units='screen',
                  text="runaway = " + str(runaway_Q(log10_alpha, log10_eta)),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='19px',
+                 text_font_size='18px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
                  
-info_box_k_sw = Label(x=15, y=550, x_units='screen', y_units='screen',
+info_box_k_sw = Label(x=15, y=475, x_units='screen', y_units='screen',
                  text='sound wave eff. factor = ' + "%.3f" % round(k_sw(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='19px',
+                 text_font_size='18px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
-info_box_k_bub = Label(x=15, y=500, x_units='screen', y_units='screen',
+info_box_k_bub = Label(x=15, y=425, x_units='screen', y_units='screen',
                  text='bubble eff. factor = ' + "%.3f" % round(k_phi(10**log10_eta, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='19px',
+                 text_font_size='18px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
 
-info_box_v = Label(x=15, y=450, x_units='screen', y_units='screen',
+info_box_v = Label(x=15, y=375, x_units='screen', y_units='screen',
                  text='bubble wall speed = ' + "%.3f" % round(v_w(10**log10_eta, 10**log10_alpha), 2), 
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='19px',
+                 text_font_size='18px',
                  text_color='snow',
                  background_fill_color='white', background_fill_alpha=0.0)
 
@@ -89,7 +89,7 @@ plot.xaxis.axis_label_text_font_size = '16pt'
 plot.yaxis.axis_label_text_font_size = '16pt'
 plot.xaxis.major_label_text_font_size = "16pt"
 plot.yaxis.major_label_text_font_size = "16pt"
-plot.legend.label_text_font_size = '16pt'
+plot.legend.label_text_font_size = '15pt'
 plot.legend.background_fill_color = "white"
 plot.legend.background_fill_alpha = 0.2
 
