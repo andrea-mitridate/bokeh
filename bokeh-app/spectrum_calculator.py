@@ -16,7 +16,7 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, vw, contr='bubble', mod='
 
     ############
     ## bubble ##
-    ############
+    ############fid
     if contr == 'bubble':
         if mod=='Envelope':
             a = 3.
