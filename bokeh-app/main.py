@@ -18,55 +18,27 @@ mods = ['Envelope', 'Semi-analytic', 'Numerical']
 log10_T = -2.5
 log10_H_on_beta = -1.
 log10_alpha = -0.5
-log10_eta = -1.
+v = 0.5
 mod = 'Semi-analytic'
 
 f = np.logspace(-11., np.log10(3e-8))
 
-Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble', mod=mod)
-Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='sound')
-Om_turb = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='turb')
-Om_sum = Om_phi + Om_sw + Om_turb
+Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, 1, contr='bubble', mod=mod)
+Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, v, contr='sound')
 
-source_tot = ColumnDataSource(data=dict(x=f, y=Om_sum))
 source_phi = ColumnDataSource(data=dict(x=f, y=Om_phi))
 source_sw = ColumnDataSource(data=dict(x=f, y=Om_sw))
-source_turb = ColumnDataSource(data=dict(x=f, y=Om_turb))
 
 ##############
 # Info boxes #
-##############
-info_box_runaway = Label(x=15, y=525, x_units='screen', y_units='screen',
-                 text="runaway = " + str(runaway_Q(log10_alpha, log10_eta)),
+##############                 
+info_box_k_sw = Label(x=15, y=525, x_units='screen', y_units='screen',
+                 text='sound wave eff. factor = ' + "%.3f" % round(k_sw(v, 10**log10_alpha), 2),
                  render_mode='css',
                  border_line_color='white', border_line_alpha=0.0,
                  text_font_size='18px',
                  text_color='snow',
                  background_fill_color='yellow', background_fill_alpha=0.0)
-                 
-info_box_k_sw = Label(x=15, y=475, x_units='screen', y_units='screen',
-                 text='sound wave eff. factor = ' + "%.3f" % round(k_sw(10**log10_eta, 10**log10_alpha), 2),
-                 render_mode='css',
-                 border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='18px',
-                 text_color='snow',
-                 background_fill_color='yellow', background_fill_alpha=0.0)
-
-info_box_k_bub = Label(x=15, y=425, x_units='screen', y_units='screen',
-                 text='bubble eff. factor = ' + "%.3f" % round(k_phi(10**log10_eta, 10**log10_alpha), 2),
-                 render_mode='css',
-                 border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='18px',
-                 text_color='snow',
-                 background_fill_color='yellow', background_fill_alpha=0.0)
-
-info_box_v = Label(x=15, y=375, x_units='screen', y_units='screen',
-                 text='bubble wall speed = ' + "%.3f" % round(v_w(10**log10_eta, 10**log10_alpha), 2), 
-                 render_mode='css',
-                 border_line_color='white', border_line_alpha=0.0,
-                 text_font_size='18px',
-                 text_color='snow',
-                 background_fill_color='white', background_fill_alpha=0.0)
 
 ###############
 # Set up plot #
@@ -78,10 +50,8 @@ plot = figure(plot_height=679, plot_width=877,
               x_axis_label='f [Hz]', y_axis_label= 'h² Ω(f)',
               outline_line_color='snow')
 
-plot.line('x', 'y', source=source_phi, line_width=5, line_alpha=0.9, legend_label='Bubble', line_color="crimson")
-plot.line('x', 'y', source=source_sw, line_width=5, line_alpha=0.9, legend_label='Sw', line_color="mediumseagreen")
-plot.line('x', 'y', source=source_turb, line_width=5, line_alpha=0.9, legend_label='Turb', line_color="dodgerblue")
-plot.line('x', 'y', source=source_tot, line_width=5, line_alpha=0.9, legend_label='Sum', line_color="snow", line_dash='dashed')
+plot.line('x', 'y', source=source_phi, line_width=5, line_alpha=0.9, legend_label='Bubble only', line_color="crimson")
+plot.line('x', 'y', source=source_sw, line_width=5, line_alpha=0.9, legend_label='Sound-Wave only', line_color="mediumseagreen")
 
 
 # layout 
@@ -101,10 +71,7 @@ plot.xgrid.visible = True
 plot.ygrid.visible = True
 plot.outline_line_width = 3
 
-plot.add_layout(info_box_runaway)
-plot.add_layout(info_box_k_bub)
 plot.add_layout(info_box_k_sw)
-plot.add_layout(info_box_v)
 
 
 plot.yaxis[0].formatter = FuncTickFormatter(code="""
@@ -135,10 +102,10 @@ plot.multi_line(err_xs, err_ys, color='snow', line_width=4, line_alpha=0.8)
 ###################
 # Set up slsiders #
 ###################
-T = Slider(title="log T", value=-2.5, start=-7.0, end=2.0, step=0.05)
-H_on_beta = Slider(title="log(H/β)", value=-1.0, start=-5.0, end=0., step=0.05)
+T = Slider(title="log(T/GeV)", value=-2.5, start=-7.0, end=2.0, step=0.05)
+H_on_beta = Slider(title="log(H/β)", value=-1.0, start=-2.0, end=0., step=0.05)
 alpha = Slider(title="log ɑ", value=-0.5, start=-1., end=1., step=0.02)
-eta = Slider(title="log η", value=-1.0, start=-1.5, end=1.0, step=0.02)
+v_w = Slider(title="v", value=0.5, start=0, end=1.0, step=0.02)
 mode = Select(title='Bubble spectrum',value='Semi-analytic', options=mods)
 
 ##########################
@@ -150,31 +117,24 @@ def update_data(attrname, old, new):
     log10_T = T.value
     log10_H_on_beta = H_on_beta.value
     log10_alpha = alpha.value
-    log10_eta = eta.value
+    v = v_w.value
     mod = mode.value
 
     # Generate the new curve
-    Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble', mod=mod)
-    Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='sound')
-    Om_turb = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='turb')
-    Om_sum = Om_phi + Om_sw + Om_turb
+    Om_phi = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, 1, contr='bubble', mod=mod)
+    Om_sw = h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, v, contr='sound')
 
-    source_tot.data = dict(x=f, y=Om_sum)
     source_phi.data = dict(x=f, y=Om_phi)
     source_sw.data = dict(x=f, y=Om_sw)
-    source_turb.data = dict(x=f, y=Om_turb)
 
-    info_box_runaway.text = "runaway = " + str(runaway_Q(log10_alpha, log10_eta))
-    info_box_k_sw.text = 'sound wave eff. factor = ' + "%.3f" % round(k_sw(10**log10_eta, 10**log10_alpha), 2)
-    info_box_k_bub.text = 'bubble eff. factor = ' + "%.3f" % round(k_phi(10**log10_eta, 10**log10_alpha), 2)
-    info_box_v.text = 'bubble wall speed = ' + "%.3f" % round(v_w(10**log10_eta, 10**log10_alpha), 2)
+    info_box_k_sw.text = 'sound wave eff. factor = ' + "%.3f" % round(k_sw(v, 10**log10_alpha), 2)
 
-for w in [T, H_on_beta, alpha, eta, mode]:
+for w in [T, H_on_beta, alpha, v_w, mode]:
     w.on_change('value', update_data)
 
 
 # Set up layouts and add to document
-inputs = column(T, H_on_beta, alpha, eta, mode)
+inputs = column(T, H_on_beta, alpha, v_w, mode)
 
 curdoc().add_root(row(inputs, plot, width=1400))
 curdoc().info_box = "Spectrum"

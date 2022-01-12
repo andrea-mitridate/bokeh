@@ -8,11 +8,10 @@ from kinematics import *
 from cosmo import *
 
 # bubble spectrum
-def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble', mod='Semi-analytic'):
+def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, vw, contr='bubble', mod='Semi-analytic'):
 
-    [T, H_on_beta, alpha, eta] = 10**np.array([log10_T, log10_H_on_beta, log10_alpha, log10_eta])
+    [T, H_on_beta, alpha, vw] = 10**np.array([log10_T, log10_H_on_beta, log10_alpha, np.log10(vw)])
 
-    vw = v_w(eta, alpha)
     gs = g_star(log10_T)
 
     ############
@@ -39,7 +38,7 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble'
         delta = 0.48 * vw**3 / (1 + 5.3 * vw**2 + 5 * vw**4)
 
         # efficiency factor
-        k = k_phi(eta, alpha)
+        k = 1
 
         [p, q] = [2 ,2]
 
@@ -54,10 +53,14 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble'
     ## sound  ##
     ############
     if contr == 'sound':
-            
-        delta = 5.13 * 10**-1 * vw
 
-        k = k_sw(eta, alpha)
+        k = k_sw(vw, alpha)
+
+        cs = 1 / np.sqrt(3)
+        ups = 1 - (1 + 4 * (8 * np.pi)**1/3 * max(vw, cs) * H_on_beta * (1 + alpha)**1/2 / (3 * k * alpha)**1/2)**-1/2
+
+        delta = 5.13 * 10**-1 * vw * ups
+
 
         [p, q] = [2 ,1]
     
@@ -66,22 +69,6 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, log10_eta, contr='bubble'
 
         f_on_beta = 5.36 * 10**-1 / vw
 
-    ############
-    ##  turb  ##
-    ############
-    if contr == 'turb':
-        
-        delta = 2.02 * 10 * vw
-
-        k = k_turb(eta, alpha)
-
-        [p, q] = [3/2 ,1]
-
-        f_on_beta = 1.63 / vw
-
-        def S(x):
-            H_tilde = 16.5 * 10**-8 * T * (gs/100)**(1/6)
-            return x**3 / ((1 + x)**(11/3) * (1 + 8 * np.pi * x * f0/H_tilde))
 
     # dilution coeff.
     R = 7.69 * 10**-5 * gs**(-1/3)
