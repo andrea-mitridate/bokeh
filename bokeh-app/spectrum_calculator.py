@@ -22,16 +22,21 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, vw, contr='bubble', mod='
             a = 3.
             b = 0.94
             c = 1.5
+            # peak frequency at emission 
+            f_on_beta = 0.35/(1+0.07 * vw + 0.69 * vw**2)
         
         elif mod=='Semi-analytic':
             a = 1.
             b = 2.61
             c = 1.5
+            # peak frequency at emission 
+            f_on_beta = 0.1
 
         else:
             a = 0.7
             b = 2.3
             c = 1
+            f_on_beta = 0.2
 
     
         # velocity factor  
@@ -46,8 +51,6 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, vw, contr='bubble', mod='
         def S(x):
             return (a + b)**c / (b * x**(-a/c) + a * x**(b/c))**c
 
-        # peak frequency at emission 
-        f_on_beta = 0.35/(1+0.07 * vw + 0.69 * vw**2)
 
     ############
     ## sound  ##
