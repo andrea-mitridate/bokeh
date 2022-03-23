@@ -60,7 +60,7 @@ def h2_omega(f, log10_T, log10_H_on_beta, log10_alpha, vw, contr='bubble', mod='
         k = k_sw(vw, alpha)
 
         cs = 1 / np.sqrt(3)
-        ups = 1 - (1 + 4 * (8 * np.pi)**1/3 * max(vw, cs) * H_on_beta * (1 + alpha)**1/2 / (3 * k * alpha)**1/2)**-1/2
+        ups = 1 - (1 + 4 * (8 * np.pi)**1/3 * max(vw, cs) * H_on_beta * (1 + alpha)**1/2 / (3 * k * alpha)**1/2)**-(1/2)
 
         delta = 5.13 * 10**-1 * vw * ups
 
